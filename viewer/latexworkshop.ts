@@ -642,13 +642,15 @@ class LateXWorkshopPdfViewer implements ILatexWorkshopPdfViewer {
             }
 
             // Configure VIM-like shortcut keys
-            if (!evt.altKey && !evt.ctrlKey && !evt.metaKey && ['j', 'k', 'h', 'l'].includes(evt.key)) {
+            if (!evt.ctrlKey && ['j', 'k', 'h', 'l'].includes(evt.key)) {
                 evt.stopImmediatePropagation()
                 const container = document.getElementById('viewerContainer') as HTMLElement
 
+                const verticalSingleScroll = (evt.altKey || evt.metaKey) ? container.clientHeight : 40
+                const verticalRepeatScroll = (evt.altKey || evt.metaKey) ? container.clientHeight / 4 : 30
                 const configMap: {[key: string]: ScrollToOptions} = {
-                    'j': { top: evt.repeat ? 30 : 40 },
-                    'k': { top: evt.repeat ? -30 : -40 },
+                    'j': { top: evt.repeat ? verticalRepeatScroll : verticalSingleScroll },
+                    'k': { top: evt.repeat ? -verticalRepeatScroll : -verticalSingleScroll },
                     'h': { left: evt.repeat ? -30 : -40 },
                     'l': { left: evt.repeat ? 30 : 40 },
                 }
