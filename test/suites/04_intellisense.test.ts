@@ -64,7 +64,7 @@ suite('Intellisense test suite', () => {
     })
 
     test.run('test default envs', () => {
-        let defaultEnvs = lw.completion.environment.getDefaultEnvs(EnvSnippetType.AsCommand).map(e => e.label)
+        let defaultEnvs = lw.completion.environment.getDefaultEnvs(EnvSnippetType.AsMacro).map(e => e.label)
         assert.ok(defaultEnvs.includes('document'))
         assert.ok(defaultEnvs.includes('align'))
         defaultEnvs = lw.completion.environment.getDefaultEnvs(EnvSnippetType.AsName).map(e => e.label)
@@ -154,6 +154,17 @@ suite('Intellisense test suite', () => {
         assert.ok(suggestions.labels.includes('\\FIXME{}'))
         assert.ok(suggestions.labels.includes('\\FIXMETOO[]{}'))
         assert.ok(suggestions.labels.includes('\\fix[]{}{}'))
+    })
+
+    test.run('command intellisense with cmds defined by \\NewDocumentCommand', async (fixture: string) => {
+        await test.load(fixture, [
+            {src: 'intellisense/newdocumentcommand.tex', dst: 'main.tex'}
+        ])
+        const suggestions = test.suggest(0, 1)
+        assert.ok(suggestions.labels.includes('\\testNoArg'))
+        assert.ok(suggestions.labels.includes('\\testA{}'))
+        assert.ok(suggestions.labels.includes('\\testB[]{}'))
+        assert.ok(suggestions.labels.includes('\\testC{}[][]{}{}'))
     })
 
     test.run('command intellisense with config `intellisense.argumentHint.enabled`', async (fixture: string) => {

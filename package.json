@@ -3,7 +3,7 @@
   "displayName": "LaTeX Workshop",
   "description": "Boost LaTeX typesetting efficiency with preview, compile, autocomplete, colorize, and more.",
   "icon": "icons/icon.png",
-  "version": "9.16.1",
+  "version": "9.18.0",
   "publisher": "James-Yu",
   "license": "MIT",
   "homepage": "https://github.com/James-Yu/LaTeX-Workshop",
@@ -1990,6 +1990,12 @@
           "default": false,
           "markdownDescription": "When `\\` is typed, show unimath symbols in the dropdown selector."
         },
+        "latex-workshop.intellisense.subsuperscript.enabled": {
+          "scope": "window",
+          "type": "boolean",
+          "default": false,
+          "markdownDescription": "Auto-complete sub- and super-scripts from the current project."
+        },
         "latex-workshop.intellisense.package.enabled": {
           "scope": "window",
           "type": "boolean",
@@ -2596,6 +2602,7 @@
     "@unified-latex/unified-latex-types": "1.4.2",
     "@unified-latex/unified-latex-util-arguments": "1.4.2",
     "@unified-latex/unified-latex-util-parse": "1.4.2",
+    "@unified-latex/unified-latex-util-to-string": "1.4.2",
     "@vscode/test-electron": "2.3.8",
     "@vscode/vsce": "2.22.0",
     "c8": "^8.0.1",
@@ -2605,6 +2612,6 @@
     "rimraf": "5.0.5",
     "textmate-bailout": "1.1.0",
     "typescript": "5.3.3",
-    "vscode-extend-language": "0.1.1"
+    "vscode-extend-language": "0.1.2"
   }
 }
