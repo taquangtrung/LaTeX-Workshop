@@ -646,11 +646,11 @@ class LateXWorkshopPdfViewer implements ILatexWorkshopPdfViewer {
                 evt.stopImmediatePropagation()
                 const container = document.getElementById('viewerContainer') as HTMLElement
 
-                const verticalSingleScroll = (evt.altKey || evt.metaKey) ? container.clientHeight : 40
-                const verticalRepeatScroll = (evt.altKey || evt.metaKey) ? container.clientHeight / 4 : 30
+                const normalVScrollAmt = (evt.altKey || evt.metaKey) ? container.clientHeight : 40
+                const repeatVScrollAmt = (evt.altKey || evt.metaKey) ? container.clientHeight / 4 : 30
                 const configMap: {[key: string]: ScrollToOptions} = {
-                    'j': { top: evt.repeat ? verticalRepeatScroll : verticalSingleScroll },
-                    'k': { top: evt.repeat ? -verticalRepeatScroll : -verticalSingleScroll },
+                    'j': { top: evt.repeat ? repeatVScrollAmt : normalVScrollAmt },
+                    'k': { top: evt.repeat ? -repeatVScrollAmt : -normalVScrollAmt },
                     'h': { left: evt.repeat ? -30 : -40 },
                     'l': { left: evt.repeat ? 30 : 40 },
                 }
@@ -660,9 +660,16 @@ class LateXWorkshopPdfViewer implements ILatexWorkshopPdfViewer {
                     container.scrollBy({ ...configMap[evt.key], behavior })
                 }
             }
-        })
 
-        ;(document.getElementById('outerContainer') as HTMLElement).onmousemove = (e) => {
+            // Configure Emacs-like search by `ctrl+s`
+            if (evt.key === 's' && evt.ctrlKey && !evt.shiftKey && !evt.altKey && !evt.metaKey) {
+                evt.stopImmediatePropagation()
+                PDFViewerApplication.findBar.open()
+            }
+
+        });
+
+        (document.getElementById('outerContainer') as HTMLElement).onmousemove = (e) => {
             if (e.clientY <= 64) {
                 this.showToolbar(true)
             }
