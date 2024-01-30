@@ -661,8 +661,9 @@ class LateXWorkshopPdfViewer implements ILatexWorkshopPdfViewer {
                 }
             }
 
-            // Configure Emacs-like search by `ctrl+s`
-            if (evt.key === 's' && evt.ctrlKey && !evt.shiftKey && !evt.altKey && !evt.metaKey) {
+            // Configure search by `ctrl+s` (Emacs-like) or `/` (Vim-like)
+            if (!evt.shiftKey && !evt.altKey && !evt.metaKey &&
+                    ((evt.ctrlKey && evt.key === 's' || !evt.ctrlKey && evt.key === '/'))){
                 evt.stopImmediatePropagation()
                 PDFViewerApplication.findBar.open()
             }
