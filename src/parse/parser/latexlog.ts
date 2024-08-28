@@ -7,14 +7,21 @@ import { type IParser, type LogEntry, showCompilerDiagnostics } from './parserut
 const logger = lw.log('Parser', 'TexLog')
 
 const latexError = /^(?:(.*):(\d+):|!)(?: (.+) Error:)? (.+?)$/
-const latexBox = /^((?:Over|Under)full \\[vh]box \([^)]*\)) in paragraph at lines (\d+)--(\d+)$/
-const latexBoxAlt = /^((?:Over|Under)full \\[vh]box \([^)]*\)) detected at line (\d+)$/
-const latexBoxOutput = /^((?:Over|Under)full \\[vh]box \([^)]*\)) has occurred while \\output is active(?: \[(\d+)\])?/
+const latexOverfullBox = /^(Overfull \\[vh]box \([^)]*\)) in paragraph at lines (\d+)--(\d+)$/
+const latexOverfullBoxAlt = /^(Overfull \\[vh]box \([^)]*\)) detected at line (\d+)$/
+const latexOverfullBoxOutput = /^(Overfull \\[vh]box \([^)]*\)) has occurred while \\output is active(?: \[(\d+)\])?/
+const latexUnderfullBox = /^(Underfull \\[vh]box \([^)]*\)) in paragraph at lines (\d+)--(\d+)$/
+const latexUnderfullBoxAlt = /^(Underfull \\[vh]box \([^)]*\)) detected at line (\d+)$/
+const latexUnderfullBoxOutput = /^(Underfull \\[vh]box \([^)]*\)) has occurred while \\output is active(?: \[(\d+)\])?/
 const latexWarn = /^((?:(?:Class|Package|Module) \S*)|LaTeX(?: \S*)?|LaTeX3) (Warning|Info):\s+(.*?)(?: on(?: input)? line (\d+))?(\.|\?|)$/
 const latexPackageWarningExtraLines = /^\((.*)\)\s+(.*?)(?: +on input line (\d+))?(\.)?$/
 const latexMissChar = /^\s*(Missing character:.*?!)/
 const bibEmpty = /^Empty `thebibliography' environment/
 const biberWarn = /^Biber warning:.*WARN - I didn't find a database entry for '([^']+)'/
+
+// LaTeX Warning: Reference `non-exist' on page 1 undefined on input line 10.
+// LaTeX Warning: Citation `also-nothing' on page 1 undefined on input line 12.
+const UNDEFINED_REFERENCE = /^LaTeX Warning: (Reference|Citation) `(.*?)' on page (?:\d+) undefined on input line (\d+).$/
 
 // const truncatedLine = /(.{77}[^\.](\w|\s|-|\\|\/))(\r\n|\n)/g
 // A line with an error message will start with an 'l' character followed by a line number and then a space.
@@ -134,41 +141,13 @@ function parseLine(line: string, state: ParserState) {
             return
         }
     }
-    let result = line.match(latexBox)
-    if (!result) {
-        result = line.match(latexBoxAlt)
-    }
-    if (result && configuration.get('message.badbox.show')) {
-        if (state.currentResult.type !== '') {
-            buildLog.push(state.currentResult)
-        }
-        state.currentResult = {
-            type: 'typesetting',
-            file: filename,
-            line: parseInt(result[2], 10),
-            text: result[1]
-        }
-        state.searchEmptyLine = false
-        state.insideBoxWarn = true
-        parseLine(line.substring(result[0].length), state)
+    if (parseUndefinedReference(line, filename, state)) {
         return
     }
-    result = line.match(latexBoxOutput)
-    if (result && configuration.get('message.badbox.show')) {
-        if (state.currentResult.type !== '') {
-            buildLog.push(state.currentResult)
-        }
-        state.currentResult = {
-            type: 'typesetting',
-            file: filename,
-            line: 1,
-            text: result[2] ? `${result[1]} in page ${result[2]}` : result[1]
-        }
-        state.searchEmptyLine = false
-        parseLine(line.substring(result[0].length), state)
+    if (parseBadBox(line, filename, state, configuration.get('message.badbox.show'))) {
         return
     }
-    result = line.match(latexMissChar)
+    let result = line.match(latexMissChar)
     if (result) {
         if (state.currentResult.type !== '') {
             buildLog.push(state.currentResult)
@@ -191,7 +170,7 @@ function parseLine(line: string, state: ParserState) {
             type: 'warning',
             file: filename,
             line: result[4] ? parseInt(result[4], 10) : 1,
-            text: result[3] + result[5]
+            text: result[1] + ': ' + result[3] + result[5]
         }
         state.searchEmptyLine = true
         return
@@ -231,6 +210,72 @@ function parseLine(line: string, state: ParserState) {
     if (state.fileStack.length === 0) {
         state.fileStack.push(state.rootFile)
     }
+}
+
+function parseUndefinedReference(line: string, filename: string, state: ParserState): boolean {
+    if (line === 'LaTeX Warning: There were undefined references.') {
+        return true
+    }
+    const match = line.match(UNDEFINED_REFERENCE)
+    if (match === null) {
+        return false
+    }
+
+    if (state.currentResult.type !== '') {
+        buildLog.push(state.currentResult)
+    }
+    state.currentResult = {
+        type: 'warning',
+        file: filename,
+        line: match[3] ? parseInt(match[3], 10) : 1,
+        text: `Cannot find ${match[1].toLowerCase()} \`${match[2]}\`.`,
+        errorPosText: match[2]
+    }
+    state.searchEmptyLine = false
+
+    return true
+}
+
+function parseBadBox(line: string, filename: string, state: ParserState, type?: 'both' | 'overfull' | 'underfull' | 'none'): boolean {
+    if (type === undefined || type === 'none') {
+        return false
+    }
+    const regexs = []
+    if (['both', 'overfull'].includes(type)) {
+        regexs.push(latexOverfullBox, latexOverfullBoxAlt, latexOverfullBoxOutput)
+    }
+    if (['both', 'underfull'].includes(type)) {
+        regexs.push(latexUnderfullBox, latexUnderfullBoxAlt, latexUnderfullBoxOutput)
+    }
+    for (const regex of regexs) {
+        const result = line.match(regex)
+        if (result === null) {
+            continue
+        }
+        if (state.currentResult.type !== '') {
+            buildLog.push(state.currentResult)
+        }
+        if ([latexOverfullBoxOutput, latexUnderfullBoxOutput].includes(regex)) {
+            state.currentResult = {
+                type: 'typesetting',
+                file: filename,
+                line: 1,
+                text: result[2] ? `${result[1]} in page ${result[2]}` : result[1]
+            }
+        } else {
+            state.currentResult = {
+                type: 'typesetting',
+                file: filename,
+                line: parseInt(result[2], 10),
+                text: result[1]
+            }
+            state.insideBoxWarn = true
+        }
+        state.searchEmptyLine = false
+        parseLine(line.substring(result[0].length), state)
+        return true
+    }
+    return false
 }
 
 function parseLaTeXFileStack(line: string, fileStack: string[], nested: number): number {

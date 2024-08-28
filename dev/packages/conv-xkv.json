@@ -1,0 +1,31 @@
+{
+  "includes": {
+    "xkeyval": []
+  },
+  "macros": {
+    "cxkvsetkeys{}{}": {
+      "snippet": "cxkvsetkeys{${1:family}}{${2:keyval pairs}}"
+    },
+    "cxkvsetkeys(){}{}": {
+      "snippet": "cxkvsetkeys(${3:name}){${1:family}}{${2:keyval pairs}}"
+    },
+    "cxkvsetkeys()[]{}{}": {
+      "snippet": "cxkvsetkeys(${4:name})[${3:prefix}]{${1:family}}{${2:keyval pairs}}"
+    },
+    "cxkvsetkeys()[]{}[]{}": {
+      "snippet": "cxkvsetkeys(${5:name})[${3:prefix}]{${1:family}}[${4:na}]{${2:keyval pairs}}"
+    },
+    "DeclareDelimiter{}{}": {
+      "snippet": "DeclareDelimiter{${1:name}}{${2:delimiter}}"
+    },
+    "usekvdelim{}": {
+      "snippet": "usekvdelim{${1:name}}"
+    },
+    "cxkvSetup{}": {
+      "snippet": "cxkvSetup{${1:file}}"
+    }
+  },
+  "envs": {},
+  "options": [],
+  "keyvals": []
+}

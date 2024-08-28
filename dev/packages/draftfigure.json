@@ -1,0 +1,34 @@
+{
+  "includes": {
+    "graphicx": [],
+    "etoolbox": [],
+    "xkeyval": [],
+    "calc": []
+  },
+  "macros": {
+    "setdf{}": {
+      "snippet": "setdf{${1:options}}",
+      "keyvalindex": 0,
+      "keyvalpos": 0
+    }
+  },
+  "envs": {},
+  "options": [
+    "content={",
+    "filename",
+    "style=",
+    "size=",
+    "position=",
+    "noframe"
+  ],
+  "keyvals": [
+    [
+      "content={%|}",
+      "filename",
+      "style=",
+      "size=",
+      "position=",
+      "noframe"
+    ]
+  ]
+}

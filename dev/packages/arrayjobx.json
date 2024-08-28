@@ -1,0 +1,36 @@
+{
+  "includes": {},
+  "macros": {
+    "newarray": {},
+    "newarray{}": {
+      "snippet": "newarray{${1:cmd}}"
+    },
+    "delarray": {},
+    "readarray{}{}": {
+      "snippet": "readarray{${1:array name}}{${2:content1&content2&...}}"
+    },
+    "cachedata": {},
+    "ifemptydata": {},
+    "emptydatatrue": {},
+    "emptydatafalse": {},
+    "ifnormalindex": {},
+    "normalindextrue": {},
+    "normalindexfalse": {},
+    "ifexpandarrayelement": {},
+    "expandarrayelementtrue": {},
+    "expandarrayelementfalse": {},
+    "arrayx{}()": {
+      "snippet": "arrayx{${1:array name}}(${2:index})"
+    },
+    "clrarray{}()": {
+      "snippet": "clrarray{${1:array name}}(${2:index})"
+    },
+    "testarray{}()": {
+      "snippet": "testarray{${1:array name}}(${2:index})"
+    },
+    "EntryArrayJob": {}
+  },
+  "envs": {},
+  "options": [],
+  "keyvals": []
+}

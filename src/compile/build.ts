@@ -34,12 +34,13 @@ function autoBuild(file: string, type: 'onFileChange' | 'onSave', bibChanged: bo
     if (configuration.get('latex.autoBuild.run') as string !== type) {
         return
     }
-    logger.log('Auto build started' + (type === 'onFileChange' ? 'detecting the change of a file' : 'on saving file') + `: ${file} .`)
+    logger.log('Auto build started ' + (type === 'onFileChange' ? 'detecting the change of a file' : 'on saving file') + `: ${file} .`)
     lw.event.fire(lw.event.AutoBuildInitiated, {type, file})
     if (!canAutoBuild()) {
         logger.log('Autobuild temporarily disabled.')
         return
     }
+    lw.compile.lastAutoBuildTime = Date.now()
     if (!bibChanged && lw.root.subfiles.path && configuration.get('latex.rootFile.useSubFile')) {
         return build(true, lw.root.subfiles.path, lw.root.subfiles.langId)
     } else {
@@ -57,7 +58,7 @@ function autoBuild(file: string, type: 'onFileChange' | 'onSave', bibChanged: bo
  */
 function canAutoBuild(): boolean {
     const configuration = vscode.workspace.getConfiguration('latex-workshop', lw.root.file.path ? vscode.Uri.file(lw.root.file.path) : undefined)
-    return Date.now() - lw.compile.lastBuildTime >= (configuration.get('latex.autoBuild.interval', 1000) as number)
+    return Date.now() - lw.compile.lastAutoBuildTime >= (configuration.get('latex.autoBuild.interval', 1000) as number)
 }
 
 let isBuilding = false
@@ -95,7 +96,7 @@ async function build(skipSelection: boolean = false, rootFile: string | undefine
     const externalBuildCommand = configuration.get('latex.external.build.command') as string
     const externalBuildArgs = configuration.get('latex.external.build.args') as string[]
 
-    if (rootFile === undefined && lw.file.hasTexLangId(activeEditor.document.languageId)) {
+    if (rootFile === undefined && lw.file.hasTeXLangId(activeEditor.document.languageId)) {
         await lw.root.find()
         rootFile = lw.root.file.path
         languageId = lw.root.file.langId
@@ -147,7 +148,6 @@ async function buildLoop() {
 
     isBuilding = true
     lw.compile.compiledPDFWriting++
-    lw.compile.lastBuildTime = Date.now()
     // Stop watching the PDF file to avoid reloading the PDF viewer twice.
     // The builder will be responsible for refreshing the viewer.
     let skipped = true
@@ -156,6 +156,7 @@ async function buildLoop() {
         if (step === undefined) {
             break
         }
+        lw.compile.lastSteps.push(step)
         const env = spawnProcess(step)
         const success = await monitorProcess(step, env)
         skipped = skipped && !(step.isExternal || !step.isSkipped)

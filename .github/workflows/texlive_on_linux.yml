@@ -48,7 +48,7 @@ jobs:
       if: steps.cache-texlive.outputs.cache-hit != 'true'
     - uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
     - run: |
         perl -v
         perl -MCwd -e 'print $Cwd::VERSION."\n";'
@@ -65,4 +65,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-log
-        path: test/log/*.log
+        path: test/log/**/*.log

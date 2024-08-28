@@ -1,0 +1,373 @@
+{
+  "includes": {
+    "xcolor": [],
+    "tikz": [],
+    "tikzlibrarycalc": [],
+    "tikzlibraryshapes.symbols": [],
+    "tikzlibrarypositioning": [],
+    "tikzlibraryintersections": [],
+    "tikzlibraryshapes.geometric": [],
+    "tikzlibraryshapes.arrows": [],
+    "tikzlibrarydecorations": [],
+    "tikzlibrarydecorations.pathmorphing": [],
+    "tikzlibrarydecorations.pathreplacing": [],
+    "tikzlibrarydecorations.markings": [],
+    "tikzlibrarymath": [],
+    "tikzlibraryshadows.blur": [],
+    "alphalph": [],
+    "amsmath": [],
+    "amstext": []
+  },
+  "macros": {
+    "hex()": {
+      "snippet": "hex(${1:location})"
+    },
+    "hex()()": {
+      "snippet": "hex(${1:location})(${2:name})"
+    },
+    "hex[]()": {
+      "snippet": "hex[${1:options}](${2:location})",
+      "keyvalindex": 0,
+      "keyvalpos": 0
+    },
+    "hex[]()()": {
+      "snippet": "hex[${1:options}](${2:location})(${3:name})",
+      "keyvalindex": 0,
+      "keyvalpos": 0
+    },
+    "boardframe()()": {
+      "snippet": "boardframe(${1:lower-left})(${2:upper-right})"
+    },
+    "boardframe[]()()": {
+      "snippet": "boardframe[${1:margin}](${2:lower-left})(${3:upper-right})"
+    },
+    "boardclip()(){}": {
+      "snippet": "boardclip(${2:lower-left})(${3:upper-right}){${1:options}}"
+    },
+    "splitboard{}": {
+      "snippet": "splitboard{${1:options}}",
+      "keyvalindex": 1,
+      "keyvalpos": 0
+    },
+    "hexdbglvl": {},
+    "markpos{}()": {
+      "snippet": "markpos{${1:arg1}}(${2:arg2})"
+    },
+    "init": {},
+    "northedge": {},
+    "southedge": {},
+    "northeastedge": {},
+    "northwestedge": {},
+    "southwestedge": {},
+    "southeastedge": {},
+    "hexpath": {},
+    "chitnorth": {},
+    "chitsouth": {},
+    "chiteast": {},
+    "chitwest": {},
+    "chitnortheast": {},
+    "chitnorthwest": {},
+    "chitsouthwest": {},
+    "chitsoutheast": {},
+    "fortmark": {},
+    "fortmark[]": {
+      "snippet": "fortmark[${1:options}]"
+    },
+    "terrainmark{}": {
+      "snippet": "terrainmark{${1:terrain-keys}}"
+    },
+    "terrainmark[]{}": {
+      "snippet": "terrainmark[${2:options}]{${1:terrain-keys}}"
+    },
+    "clearhex": {},
+    "clearhex[]": {
+      "snippet": "clearhex[${1:options}]"
+    },
+    "woodshex": {},
+    "woodshex[]": {
+      "snippet": "woodshex[${1:options}]"
+    },
+    "mountainhex": {},
+    "mountainhex[]": {
+      "snippet": "mountainhex[${1:options}]"
+    },
+    "cityhex": {},
+    "cityhex[]": {
+      "snippet": "cityhex[${1:options}]"
+    },
+    "beachhex": {},
+    "beachhex[]": {
+      "snippet": "beachhex[${1:options}]"
+    },
+    "seahex": {},
+    "seahex[]": {
+      "snippet": "seahex[${1:options}]"
+    },
+    "riverhex": {},
+    "riverhex[]": {
+      "snippet": "riverhex[${1:options}]"
+    },
+    "roadhex": {},
+    "roadhex[]": {
+      "snippet": "roadhex[${1:options}]"
+    },
+    "outlinerev": {},
+    "shiftScalePath{}{}": {
+      "snippet": "shiftScalePath{${1:macro}}{${2:relative-coords}}"
+    },
+    "margin": {},
+    "boardXmin": {},
+    "boardYmin": {},
+    "boardXmax": {},
+    "boardYmax": {},
+    "hexboardpath": {},
+    "boardpath()()": {
+      "snippet": "boardpath(${1:lower-left})(${2:upper-right})"
+    },
+    "debuggrid": {},
+    "boardhexes()()": {
+      "snippet": "boardhexes(${1:arg1})(${2:arg2})"
+    },
+    "boardhexes[]()()": {
+      "snippet": "boardhexes[${1:options}](${2:arg1})(${3:arg2})"
+    },
+    "segment()(){}{}{}{}": {
+      "snippet": "segment(${5:arg1})(${6:arg2}){${1:arg3}}{${2:arg4}}{${3:arg5}}{${4:arg6}}"
+    },
+    "wargamelogo": {},
+    "wargamelogo[]": {
+      "snippet": "wargamelogo[${1:options}]"
+    },
+    "wargamedbglvl": {},
+    "settosave{}": {
+      "snippet": "settosave{${1:arg}}"
+    },
+    "wglogbb{}": {
+      "snippet": "wglogbb{${1:arg}}"
+    },
+    "natoapp()": {
+      "snippet": "natoapp(${1:location})"
+    },
+    "natoapp()()": {
+      "snippet": "natoapp(${1:location})(${2:name})"
+    },
+    "natoapp[]()": {
+      "snippet": "natoapp[${1:options}](${2:location})",
+      "keyvalindex": 2,
+      "keyvalpos": 0
+    },
+    "natoapp[]()()": {
+      "snippet": "natoapp[${1:options}](${2:location})(${3:name})",
+      "keyvalindex": 2,
+      "keyvalpos": 0
+    },
+    "natoappdbglvl": {},
+    "octagon": {},
+    "topline": {},
+    "bottomline": {},
+    "thenatoappid": {},
+    "natoappmark{}": {
+      "snippet": "natoappmark{${1:mains}}"
+    },
+    "natoappmark[]{}": {
+      "snippet": "natoappmark[${2:options}]{${1:mains}}"
+    },
+    "echelonmark{}": {
+      "snippet": "echelonmark{${1:arg}}"
+    },
+    "echelonmark[]{}": {
+      "snippet": "echelonmark[${2:options}]{${1:arg}}"
+    },
+    "armouredmark": {},
+    "armouredmark[]": {
+      "snippet": "armouredmark[${1:options}]"
+    },
+    "infantrymark": {},
+    "infantrymark[]": {
+      "snippet": "infantrymark[${1:options}]"
+    },
+    "artillerymark": {},
+    "artillerymark[]": {
+      "snippet": "artillerymark[${1:options}]"
+    },
+    "combinedmark": {},
+    "combinedmark[]": {
+      "snippet": "combinedmark[${1:options}]"
+    },
+    "pgmark": {},
+    "pgmark[]": {
+      "snippet": "pgmark[${1:options}]"
+    },
+    "reconnaissancemark": {},
+    "reconnaissancemark[]": {
+      "snippet": "reconnaissancemark[${1:options}]"
+    },
+    "corpsmark": {},
+    "corpsmark[]": {
+      "snippet": "corpsmark[${1:options}]"
+    },
+    "divisionmark": {},
+    "divisionmark[]": {
+      "snippet": "divisionmark[${1:options}]"
+    },
+    "brigademark": {},
+    "brigademark[]": {
+      "snippet": "brigademark[${1:options}]"
+    },
+    "regimentmark": {},
+    "regimentmark[]": {
+      "snippet": "regimentmark[${1:options}]"
+    },
+    "sofmark": {},
+    "sofmark[]": {
+      "snippet": "sofmark[${1:options}]"
+    },
+    "mountaineermark": {},
+    "mountaineermark[]": {
+      "snippet": "mountaineermark[${1:options}]"
+    },
+    "airbornemark": {},
+    "airbornemark[]": {
+      "snippet": "airbornemark[${1:options}]"
+    },
+    "amphibiousmark": {},
+    "amphibiousmark[]": {
+      "snippet": "amphibiousmark[${1:options}]"
+    },
+    "airassaultmark": {},
+    "airassaultmark[]": {
+      "snippet": "airassaultmark[${1:options}]"
+    },
+    "testpath{}": {
+      "snippet": "testpath{${1:arg}}"
+    },
+    "cntrl": {},
+    "cntrlnortheast": {},
+    "frameopt": {},
+    "frameshape": {},
+    "innernortheast": {},
+    "linex": {},
+    "liney": {},
+    "chit()": {
+      "snippet": "chit(${1:location})"
+    },
+    "chit()()": {
+      "snippet": "chit(${1:location})(${2:name})"
+    },
+    "chit[]()": {
+      "snippet": "chit[${1:options}](${2:location})",
+      "keyvalindex": 3,
+      "keyvalpos": 0
+    },
+    "chit[]()()": {
+      "snippet": "chit[${1:options}](${2:location})(${3:name})",
+      "keyvalindex": 3,
+      "keyvalpos": 0
+    },
+    "chitdbglvl": {},
+    "chitframeopt": {},
+    "shadechit()": {
+      "snippet": "shadechit(${1:arg})"
+    },
+    "eliminatechit()": {
+      "snippet": "eliminatechit(${1:arg})"
+    },
+    "stackchits()(){}": {
+      "snippet": "stackchits(${2:arg1})(${3:arg2}){${1:arg3}}"
+    },
+    "oob": {},
+    "hoob": {},
+    "chits{}{}{}": {
+      "snippet": "chits{${1:arg1}}{${2:arg2}}{${3:arg3}}"
+    },
+    "chits*{}{}{}": {
+      "snippet": "chits*{${1:arg1}}{${2:arg2}}{${3:arg3}}"
+    },
+    "chitgrid{}{}{}": {
+      "snippet": "chitgrid{${1:columns}}{${2:rows}}{${3:cell size}}"
+    },
+    "doublechits{}{}{}": {
+      "snippet": "doublechits{${1:arg1}}{${2:arg2}}{${3:arg3}}"
+    },
+    "doublechits*{}{}{}": {
+      "snippet": "doublechits*{${1:arg1}}{${2:arg2}}{${3:arg3}}"
+    },
+    "doublechitgrid{}{}{}": {
+      "snippet": "doublechitgrid{${1:columns}}{${2:rows}}{${3:cell size}}"
+    },
+    "chitmark{}": {
+      "snippet": "chitmark{${1:chit-keys}}"
+    },
+    "chitmark[]{}": {
+      "snippet": "chitmark[${2:options}]{${1:chit-keys}}"
+    },
+    "stackmark": {},
+    "stackmark[]": {
+      "snippet": "stackmark[${1:options}]"
+    },
+    "zocmark": {},
+    "zocmark[]": {
+      "snippet": "zocmark[${1:options}]"
+    },
+    "dicemark{}": {
+      "snippet": "dicemark{${1:arg}}"
+    },
+    "dicemark[]{}": {
+      "snippet": "dicemark[${2:options}]{${1:arg}}"
+    }
+  },
+  "envs": {
+    "getbbl": {},
+    "getbb": {}
+  },
+  "options": [
+    "noterrainpic",
+    "terrainpic"
+  ],
+  "keyvals": [
+    [
+      "terrain={${1:terrain-keys}}",
+      "ridges={${1:ridges-keys}}",
+      "label={${1:label-keys}}",
+      "town={${1:town-keys}}",
+      "bevel={${1:bevel-keys}}",
+      "extra={${1:extra-keys}}",
+      "extra clipped={${1:extra-keys}}",
+      "row=${1:row}",
+      "column=${1:column}"
+    ],
+    [
+      "paper=",
+      "landscape",
+      "margin=${1:number}",
+      "ncol=${1:integer}",
+      "nrow=${1:integer}",
+      "overlap=${1:number}",
+      "image=${1:imagefile}",
+      "output=${1:file name}",
+      "standalone",
+      "scale=${1:factor}"
+    ],
+    [
+      "faction=${1:faction}",
+      "command=",
+      "main={${1:mains}}",
+      "left={${1:lefts}}",
+      "right={${1:rights}}",
+      "top={${1:tops}}",
+      "bottom={${1:bottoms}}",
+      "below={${1:belows}}",
+      "echelon=",
+      "frame={${1:frame-keys}}"
+    ],
+    [
+      "symbol={${1:nato app 6(c) spec}}",
+      "full={${1:spec}}",
+      "color=",
+      "fill=",
+      "text=",
+      "draw=",
+      "bevel={${1:bevel-keys}}"
+    ]
+  ]
+}

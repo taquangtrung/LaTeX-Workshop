@@ -1,4 +1,6 @@
 import * as vscode from 'vscode'
+import * as fs from 'fs'
+import * as cs from 'cross-spawn'
 import type { log } from './utils/logger'
 import type { event } from './core/event'
 import type { file } from './core/file'
@@ -17,9 +19,14 @@ import type { extra } from './extras'
 
 import type * as commands from './core/commands'
 
+const wrapper = <T extends Array<any>, U>(fn: (...args: T) => U) => {
+    return (...args: T): U => fn(...args)
+}
+
 /* eslint-disable */
 export const lw = {
     extensionRoot: '',
+    previousActive: undefined as vscode.TextEditor | undefined,
     constant: {} as typeof constant,
     log: {} as typeof log.getLogger,
     event: {} as typeof event,
@@ -39,6 +46,15 @@ export const lw = {
     outline: {} as typeof outline,
     extra: {} as typeof extra,
     commands: Object.create(null) as typeof commands,
+    external: {
+        spawn: wrapper(cs.spawn),
+        sync: wrapper(cs.sync),
+        stat: wrapper(vscode.workspace.fs.stat),
+        existsSync: wrapper(fs.existsSync),
+        mkdirSync: wrapper(fs.mkdirSync),
+        statSync: wrapper(fs.statSync),
+        chmodSync: wrapper(fs.chmodSync)
+    },
     onConfigChange,
     onDispose
 }

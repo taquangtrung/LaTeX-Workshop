@@ -1,0 +1,20 @@
+{
+  "includes": {
+    "scrkbase": [],
+    "xpatch": [],
+    "scrlogo": []
+  },
+  "macros": {},
+  "envs": {},
+  "options": [
+    "hyperref",
+    "floatrow",
+    "float",
+    "listings",
+    "nomencl",
+    "setspace",
+    "lscape",
+    "standardsections"
+  ],
+  "keyvals": []
+}

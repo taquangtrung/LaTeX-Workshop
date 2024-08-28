@@ -1,0 +1,61 @@
+{
+  "includes": {
+    "graphicx": [],
+    "nccboxes": []
+  },
+  "macros": {
+    "ipic{}": {
+      "snippet": "ipic{${1:imagefile}}"
+    },
+    "draftgraphics": {},
+    "finalgraphics": {},
+    "putimage(){}": {
+      "snippet": "putimage(${2:x},${3:y}){${1:imagefile}}"
+    },
+    "putimage()[]{}": {
+      "snippet": "putimage(${3:x},${4:y})[${2:width,height}]{${1:imagefile}}"
+    },
+    "putimage()(){}": {
+      "snippet": "putimage(${2:x},${3:y})(${4:xshift},${5:yshift}){${1:imagefile}}"
+    },
+    "putimage()[](){}": {
+      "snippet": "putimage(${3:x},${4:y})[${2:width,height}](${5:xshift},${6:yshift}){${1:imagefile}}"
+    }
+  },
+  "envs": {},
+  "options": [
+    "unknownkeysallowed",
+    "draft",
+    "final",
+    "hiresbb",
+    "demo",
+    "setpagesize",
+    "nosetpagesize",
+    "dvips",
+    "xdvi",
+    "dvipdf",
+    "dvipdfm",
+    "dvipdfmx",
+    "xetex",
+    "pdftex",
+    "luatex",
+    "dvisvgm",
+    "dvipsone",
+    "dviwindo",
+    "emtex",
+    "dviwin",
+    "oztex",
+    "textures",
+    "pctexps",
+    "pctexwin",
+    "pctexhp",
+    "pctex32",
+    "truetex",
+    "tcidvi",
+    "vtex",
+    "debugshow",
+    "hiderotate",
+    "hidescale"
+  ],
+  "keyvals": []
+}

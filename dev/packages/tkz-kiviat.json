@@ -1,0 +1,69 @@
+{
+  "includes": {
+    "tikz": [],
+    "tikzlibrarybackgrounds": []
+  },
+  "macros": {
+    "tkzKiviatDiagram{}": {
+      "snippet": "tkzKiviatDiagram{${1:name1,${2:name2},...}}"
+    },
+    "tkzKiviatDiagram[]{}": {
+      "snippet": "tkzKiviatDiagram[${2:options}]{${1:name1,${3:name2},...}}",
+      "keyvalindex": 0,
+      "keyvalpos": 0
+    },
+    "tkzKiviatLine[]{}": {
+      "snippet": "tkzKiviatLine[${2:options}]{${1:num1,${3:num2},...}}",
+      "keyvalindex": 1,
+      "keyvalpos": 0
+    },
+    "tkzKiviatLineFromFile[]{}{}": {
+      "snippet": "tkzKiviatLineFromFile[${3:options}]{${1:file1}}{${2:file2}}",
+      "keyvalindex": 1,
+      "keyvalpos": 0
+    },
+    "tkzKiviatGrad[]()": {
+      "snippet": "tkzKiviatGrad[${1:options}](${2:integer})",
+      "keyvalindex": 2,
+      "keyvalpos": 0
+    },
+    "tkzKiviatDiagramFromFile{}": {
+      "snippet": "tkzKiviatDiagramFromFile{${1:file}}"
+    },
+    "tkzKiviatDiagramFromFile[]{}": {
+      "snippet": "tkzKiviatDiagramFromFile[${2:options}]{${1:file}}",
+      "keyvalindex": 3,
+      "keyvalpos": 0
+    }
+  },
+  "envs": {},
+  "options": [],
+  "keyvals": [
+    [
+      "lattice=",
+      "gap=",
+      "space=",
+      "label space=",
+      "step=",
+      "radial style=",
+      "label style="
+    ],
+    [
+      "fill=",
+      "opacity="
+    ],
+    [
+      "graduation distance=",
+      "prefix=",
+      "suffix=",
+      "unity="
+    ],
+    [
+      "lattice=",
+      "gap=",
+      "space=",
+      "label space=",
+      "step="
+    ]
+  ]
+}

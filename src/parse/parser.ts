@@ -11,6 +11,8 @@ import { latexLogParser } from './parser/latexlog'
 // @ts-expect-error Load unified.js from /out/src/...
 import { toString } from '../../../resources/unified.js'
 
+const logger = lw.log('Parser')
+
 export const parser = {
     bib,
     log,
@@ -40,8 +42,14 @@ async function reset() {
     return (await proxy).reset(getMacroDefs(), getEnvDefs())
 }
 
-async function bib(s: string, options?: bibtexParser.ParserOptions): Promise<bibtexParser.BibtexAst> {
-    return (await proxy).parseBibTeX(s, options)
+async function bib(s: string, options?: bibtexParser.ParserOptions): Promise<bibtexParser.BibtexAst | undefined> {
+    let ast = undefined
+    try {
+        ast = (await proxy).parseBibTeX(s, options)
+    } catch (err) {
+        logger.logError('Error when parsing bib file.', err)
+    }
+    return ast
 }
 
 function stringify(ast: Ast.Ast): string {
@@ -66,6 +74,7 @@ const texifyLogLatex = /^running\s(pdf|lua|xe)?latex/
 
 const bibtexPattern = /^This is BibTeX, Version.*$/m
 const biberPattern = /^INFO - This is Biber .*$/m
+const bibtexPatternAlt = /^The top-level auxiliary file: .*$/m // #4197
 
 /**
  * @param msg The log message to parse.
@@ -83,6 +92,9 @@ function log(msg: string, rootFile?: string): boolean {
     } else if (msg.match(biberPattern)) {
         biberLogParser.parse(msg.match(latexmkPattern) ? trimLaTeXmkBiber(msg) : msg, rootFile)
         biberLogParser.showLog()
+    } else if (msg.match(bibtexPatternAlt)) {
+        bibtexLogParser.parse(msg.match(latexmkPattern) ? trimLaTeXmkBibTeX(msg) : msg, rootFile)
+        bibtexLogParser.showLog()
     }
 
     if (msg.match(latexmkPattern)) {

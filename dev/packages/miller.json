@@ -1,0 +1,22 @@
+{
+  "includes": {},
+  "macros": {
+    "hkl[]": {
+      "snippet": "hkl[${1:indices}]"
+    },
+    "hkl<>": {
+      "snippet": "hkl<${1:indices}>"
+    },
+    "hkl()": {
+      "snippet": "hkl(${1:indices})"
+    },
+    "hkl{}": {
+      "snippet": "hkl{${1:indices}}"
+    },
+    "millerminus": {},
+    "millerskip": {}
+  },
+  "envs": {},
+  "options": [],
+  "keyvals": []
+}

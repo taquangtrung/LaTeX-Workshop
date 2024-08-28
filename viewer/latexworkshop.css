@@ -21,10 +21,10 @@
 }
 
 html[dir='ltr'] .findbar {
-    left: 125px;
+    left: 94px;
 }
 html[dir='rtl'] .findbar {
-    right: 125px;
+    right: 94px;
 }
 
 @media all and (max-width: 860px) {
@@ -54,6 +54,26 @@ html[dir='rtl'] .findbar {
     transform: translate(-50%, -50%);
 }
 
+@keyframes synctex-indicator-fadeOut {
+    0% {
+        background-color: rgba(255, 0, 0, 0.4);
+    }
+    25% {
+        background-color: rgba(255, 0, 0, 0.4);
+    }
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.synctex-indicator-rect {
+    position: absolute;
+    z-index: 100000;
+    background-color: rgba(0, 0, 255, 0.5);
+    pointer-events: none;
+    animation: synctex-indicator-fadeOut 1s forwards;
+}
+
 #synctex-indicator.show {
     transition: none;
     opacity: 0.8;
@@ -78,10 +98,24 @@ html[dir='rtl'] .findbar {
     mask-image: var(--findbarButton-next-icon);
 }
 
+#TrimButton::before{
+    -webkit-mask-image:var(--secondaryToolbarButton-spreadNone-icon);
+    mask-image:var(--secondaryToolbarButton-spreadNone-icon);
+}
+
 .pdfViewer.removePageBorders .page {
     border: none;
     overflow: hidden;
     box-shadow: 0px 0px 0px 1px lightgrey;
+}
+
+.pdfViewer .page.loadingIcon::after{
+    z-index: -100000 !important;
+}
+
+.pdfViewer .page:not(.loading)::after{
+    transition-property: auto !important;
+    display:block !important;
 }
 
 .notransition {
@@ -137,29 +171,24 @@ html[dir='rtl'] .findbar {
     display: none  !important;
 }
 
+#secondaryDownload + .horizontalToolbarSeparator {
+    display: none  !important;
+}
+
 #sidebarToggle::after {
     display: none;
 }
 
-#synctexOffButton::before {
+#synctexOnButton::before, #autoRefreshOnButton::before {
     display: none;
 }
 
-#synctexOffButton, #autoReloadOffButton {
+#synctexOnButton, #autoRefreshOnButton {
     padding-left: 14px;
 }
 
-#synctexOffButton > span, #autoReloadOffButton > span {
+#synctexOnButton > span, #autoRefreshOnButton > span {
     padding-left: 9px;
-}
-
-#autoReloadOffButton::before {
-    display: none;
-}
-
-#trimSelectContainer {
-    min-width: 112px;
-    max-width: 112px;
 }
 
 .annotationLayer .popup {

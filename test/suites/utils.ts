@@ -33,6 +33,10 @@ const suite = {
 }
 export { suite }
 
+export function skip(_testName: string, _cb: (fixturePath: string) => unknown, _platforms?: NodeJS.Platform[]) {
+    return
+}
+
 export function only(testName: string, cb: (fixturePath: string) => unknown, platforms?: NodeJS.Platform[]) {
     return run(testName, cb, platforms, true)
 }
@@ -54,7 +58,7 @@ export function run(testName: string, cb: (fixturePath: string) => unknown, plat
     }
 
     testIndex++
-    const testFunction = (process.env['LATEXWORKSHOP_CLI'] || !runonly) ? test : test.only
+    const testFunction = (process.env['LATEXWORKSHOP_CITEST'] || !runonly) ? test : test.only
 
     const label = testLabel()
     testFunction(`[${label}] ${suite.name}: ${testName}`, async () => {
@@ -75,6 +79,10 @@ export function sleep(ms: number) {
 export async function reset() {
     await vscode.commands.executeCommand('workbench.action.closeAllEditors')
     await Promise.all(Object.values(lw.cache.promises))
+    lw.compile.lastSteps = []
+    lw.compile.lastAutoBuildTime = 0
+    lw.compile.compiledPDFPath = ''
+    lw.compile.compiledPDFWriting = 0
     lw.root.file.path = undefined
     lw.root.subfiles.path = undefined
     lw.completion.input.reset()

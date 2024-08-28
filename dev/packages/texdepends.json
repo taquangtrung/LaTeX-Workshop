@@ -1,0 +1,19 @@
+{
+  "includes": {
+    "ifthen": [],
+    "ifxetex": [],
+    "ifpdf": [],
+    "xstring": []
+  },
+  "macros": {
+    "RequireFile{}": {
+      "snippet": "RequireFile{${1:file}}"
+    }
+  },
+  "envs": {},
+  "options": [
+    "debug",
+    "extension=${1:file ext}"
+  ],
+  "keyvals": []
+}

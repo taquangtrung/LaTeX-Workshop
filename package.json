@@ -3,8 +3,8 @@
   "displayName": "LaTeX Workshop",
   "description": "Boost LaTeX typesetting efficiency with preview, compile, autocomplete, colorize, and more.",
   "icon": "icons/icon.png",
-  "version": "9.18.2",
-  "publisher": "taquangtrung",
+  "version": "10.1.0",
+  "publisher": "James-Yu",
   "license": "MIT",
   "homepage": "https://github.com/James-Yu/LaTeX-Workshop",
   "repository": {
@@ -12,7 +12,7 @@
     "url": "https://github.com/James-Yu/LaTeX-Workshop.git"
   },
   "engines": {
-    "vscode": "^1.74.0"
+    "vscode": "^1.88.0"
   },
   "categories": [
     "Programming Languages",
@@ -153,6 +153,13 @@
       {
         "id": "markdown_latex_combined",
         "configuration": "./syntax/markdown-latex-combined-language-configuration.json"
+      },
+      {
+        "id": "latex_workshop_log",
+        "aliases": [
+          "LaTeX Workshop Log"
+        ],
+        "configuration": "./syntax/latex-workshop-log-language-configuration.json"
       }
     ],
     "grammars": [
@@ -202,8 +209,27 @@
       },
       {
         "language": "latex-expl3",
-        "scopeName": "text.tex.latex.expl3",
-        "path": "./syntax/LaTeX-Expl3.tmLanguage.json"
+        "scopeName": "text.tex.latex",
+        "path": "./syntax/LaTeX.tmLanguage.json",
+        "embeddedLanguages": {
+          "source.asymptote": "asymptote",
+          "source.cpp": "cpp_embedded_latex",
+          "source.css": "css",
+          "source.dot": "dot",
+          "source.gnuplot": "gnuplot",
+          "text.html": "html",
+          "source.java": "java",
+          "source.js": "javascript",
+          "source.julia": "julia",
+          "source.lua": "lua",
+          "source.python": "python",
+          "source.ruby": "ruby",
+          "source.scala": "scala",
+          "source.ts": "typescript",
+          "text.xml": "xml",
+          "source.yaml": "yaml",
+          "meta.embedded.markdown_latex_combined": "markdown_latex_combined"
+        }
       },
       {
         "language": "markdown_latex_combined",
@@ -241,6 +267,11 @@
         "embeddedLanguages": {
           "source.r": "r"
         }
+      },
+      {
+        "language": "latex_workshop_log",
+        "scopeName": "text.latex_workshop.log",
+        "path": "./syntax/LaTeX-Workshop-Log.tmLanguage.json"
       }
     ],
     "snippets": [
@@ -268,229 +299,234 @@
     "commands": [
       {
         "command": "latex-workshop.navigate-envpair",
-        "title": "Navigate to matching begin/end",
+        "title": "%command.navigate-envpair%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.select-envname",
-        "title": "Select the current environment name",
+        "title": "%command.select-envname%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.select-envcontent",
-        "title": "Select the current environment content",
+        "title": "%command.select-envcontent%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.select-env",
-        "title": "Select the current environment",
+        "title": "%command.select-env%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.multicursor-envname",
-        "title": "Add a multicursor to the current environment name",
+        "title": "%command.multicursor-envname%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.wrap-env",
-        "title": "Surround selection with \\begin{}...\\end{}",
+        "title": "%command.wrap-env%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.surround",
-        "title": "Surround selection with LaTeX command",
+        "title": "%command.surround%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.close-env",
-        "title": "Close current environment",
+        "title": "%command.close-env%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.toggle-equation-envname",
-        "title": "Toggle between \\[...\\] and \\begin{}...\\end{}",
+        "title": "%command.toggle-equation-envname%",
+        "category": "LaTeX Workshop"
+      },
+      {
+        "command": "latex-workshop.revealOutputDir",
+        "title": "%command.revealoutput%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.saveWithoutBuilding",
-        "title": "Save without Building",
+        "title": "%command.saveWithoutBuilding%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.build",
-        "title": "Build LaTeX project",
+        "title": "%command.build%",
         "category": "LaTeX Workshop",
         "icon": "$(debug-start)",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.recipes",
-        "title": "Build with recipe",
+        "title": "%command.recipes%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.view",
-        "title": "View LaTeX PDF file",
+        "title": "%command.view%",
         "category": "LaTeX Workshop",
         "icon": "$(open-preview)",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.tab",
-        "title": "View LaTeX PDF file in VSCode tab",
+        "title": "%command.tab%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.viewInBrowser",
-        "title": "View LaTeX PDF file in web browser",
+        "title": "%command.viewInBrowser%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.viewExternal",
-        "title": "View LaTeX PDF file in external viewer",
+        "title": "%command.viewExternal%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.refresh-viewer",
-        "title": "Refresh all LaTeX PDF viewers",
+        "title": "%command.refresh-viewer%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.kill",
-        "title": "Kill LaTeX compiler process",
+        "title": "%command.kill%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.synctex",
-        "title": "SyncTeX from cursor",
+        "title": "%command.synctex%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.clean",
-        "title": "Clean up auxiliary files",
+        "title": "%command.clean%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.citation",
-        "title": "Open citation browser",
+        "title": "%command.citation%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.addtexroot",
-        "title": "Insert %!TeX root magic comment",
+        "title": "%command.addtexroot%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.wordcount",
-        "title": "Count words in LaTeX document",
+        "title": "%command.wordcount%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.changeHostName",
-        "title": "Change server listening hostname",
+        "title": "%command.changeHostName%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.resetHostName",
-        "title": "Reset server listening hostname to 127.0.0.1",
+        "title": "%command.resetHostName%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.compilerlog",
-        "title": "View LaTeX compiler logs",
+        "title": "%command.compilerlog%",
         "category": "LaTeX Workshop",
         "enablement": "!virtualWorkspace"
       },
       {
         "command": "latex-workshop.log",
-        "title": "Show LaTeX Workshop messages",
+        "title": "%command.log%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.actions",
-        "title": "LaTeX actions",
+        "title": "%command.actions%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop-dev.parselog",
-        "title": "Parse current document as LaTeX logs",
+        "title": "%command-dev.parselog%",
         "category": "LaTeX Workshop DevTools"
       },
       {
         "command": "latex-workshop-dev.parsetex",
-        "title": "Parse current file as LaTeX AST",
+        "title": "%command-dev.parsetex%",
         "category": "LaTeX Workshop DevTools"
       },
       {
         "command": "latex-workshop-dev.parsebib",
-        "title": "Parse current file as BibTeX AST",
+        "title": "%command-dev.parsebib%",
         "category": "LaTeX Workshop DevTools"
       },
       {
         "command": "latex-workshop-dev.striptext",
-        "title": "Strip text and comments from LaTeX.",
+        "title": "%command-dev.striptext%",
         "category": "LaTeX Workshop DevTools"
       },
       {
         "command": "latex-workshop.texdoc",
-        "title": "Show package documentation",
+        "title": "%command.texdoc%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.texdocUsepackages",
-        "title": "Show package documentation actually used",
+        "title": "%command.texdocUsepackages%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.promote-sectioning",
-        "title": "Promote all the section levels used in the selection",
+        "title": "%command.promote-sectioning%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.demote-sectioning",
-        "title": "Demote all the section levels used in the selection",
+        "title": "%command.demote-sectioning%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.select-section",
-        "title": "Select the current section",
+        "title": "%command.select-section%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.bibsort",
-        "title": "Sort BibTeX file",
+        "title": "%command.bibsort%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.bibalign",
-        "title": "Align BibTeX file",
+        "title": "%command.bibalign%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.bibalignsort",
-        "title": "Sort and align BibTeX file",
+        "title": "%command.bibalignsort%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.openMathPreviewPanel",
-        "title": "Open Math Preview Panel",
+        "title": "%command.openMathPreviewPanel%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.closeMathPreviewPanel",
-        "title": "Close Math Preview Panel",
+        "title": "%command.closeMathPreviewPanel%",
         "category": "LaTeX Workshop"
       },
       {
         "command": "latex-workshop.toggleMathPreviewPanel",
-        "title": "Toggle Math Preview Panel",
+        "title": "%command.toggleMathPreviewPanel%",
         "category": "LaTeX Workshop"
       }
     ],
@@ -1061,7 +1097,7 @@
           "scope": "resource",
           "type": "string",
           "default": "%DIR%",
-          "markdownDescription": "The directory where the extension tries to find project files (e.g., PDF and SyncTeX files) are located. Both relative and absolute paths are supported. Relative path start from the root file location, so beware if it is located in sub-directory. The path must not contain a trailing slash. The LaTeX toolchain should output files to this path. For a list of supported placeholders, please visit https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#placeholders."
+          "markdownDescription": "The directory where the extension tries to find project files (e.g., PDF and SyncTeX files) are located. Both relative and absolute paths are supported. Relative path start from the root file location, so beware if it is located in sub-directory. The path must not contain a trailing slash. The LaTeX toolchain should output files to this path. For a list of supported placeholders, please visit https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#placeholders. Note that if this config is set to %DIR% (default value) or %DIR_W32%, the extension will try to parse the last LaTeX tools used and look for `-out-directory=` and `-outdir=`, and automatically determine the output directory. This means that you can safely ignore this config if you use `latexmk` and do not manually `mv` the output files in your recipe."
         },
         "latex-workshop.latex.jobname": {
           "scope": "resource",
@@ -1073,7 +1109,7 @@
           "scope": "resource",
           "type": "boolean",
           "default": false,
-          "markdownDescription": "Whether to include the name of the root file being built in the status bar."
+          "markdownDescription": "Whether to include the name of the root file being built in the status bar. You can use only 2 placeholders: `%WORKSPACE_FOLDER%`, `%RELATIVE_DIR%`. Please visit https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#placeholders for their definitions."
         },
         "latex-workshop.latex.texDirs": {
           "scope": "window",
@@ -1103,11 +1139,17 @@
           "default": "kpsewhich",
           "markdownDescription": "Define the location of the kpsewhich executable file."
         },
-        "latex-workshop.kpsewhich.enabled": {
+        "latex-workshop.kpsewhich.class.enabled": {
           "scope": "window",
           "type": "boolean",
           "default": true,
-          "markdownDescription": "Use kpsewhich as defined by `#latex-workshop.kpsewhich.path#` to resolve bibliography files in addition to looking into the directories listed in `#latex-workshop.latex.bibDirs#`."
+          "markdownDescription": "Use kpsewhich as defined by `#latex-workshop.kpsewhich.path#` to resolve latex class paths for intellisense parsing."
+        },
+        "latex-workshop.kpsewhich.bibtex.enabled": {
+          "scope": "window",
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Use kpsewhich as defined by `#latex-workshop.kpsewhich.path#` to resolve bibliography file paths for intellisense parsing."
         },
         "latex-workshop.latex.bibDirs": {
           "scope": "window",
@@ -1317,6 +1359,7 @@
             "type": "string"
           },
           "default": [
+            "-outdir=%OUTDIR%",
             "-c",
             "%TEX%"
           ],
@@ -1533,19 +1576,7 @@
           "scope": "window",
           "type": "number",
           "default": 0,
-          "enum": [
-            0,
-            1,
-            2,
-            3
-          ],
-          "markdownDescription": "The default trim mode of the PDF viewer.",
-          "enumDescriptions": [
-            "No page trimming",
-            "Trim 5% at margin",
-            "Trim 10% at margin",
-            "Trim 15% at margin"
-          ]
+          "markdownDescription": "The default trim percentage of the PDF viewer. This should be an integer between 0 and 99, indicating the portion of PDF to be trimmed. For example, setting the value to `10` means that 10% of the height and width of PDF pages are trimmed off."
         },
         "latex-workshop.view.pdf.scrollMode": {
           "scope": "window",
@@ -1667,23 +1698,27 @@
           "default": "synctex",
           "markdownDescription": "Define the location of SyncTeX executive file. Additional arguments, e.g., synctex modes and position of click, will be appended to this command."
         },
-        "latex-workshop.synctex.indicator.enabled": {
+        "latex-workshop.synctex.indicator": {
           "scope": "window",
-          "type": "boolean",
-          "default": true,
-          "markdownDescription": "Define the visibility of SyncTeX indicator (a red highlighting circle) after a forward SyncTeX in the PDF viewer."
+          "type": "string",
+          "enum": [
+            "none",
+            "circle",
+            "rectangle"
+          ],
+          "enumDescriptions": [
+            "Hide the indicator.",
+            "Indicates a possible location with a red circular SyncTeX indicator.",
+            "Indicates the whole line selected in the TeX file with a red rectangular SyncTeX indicator. Only valid when SyncTeX binary is executable."
+          ],
+          "default": "rectangle",
+          "markdownDescription": "Define the visibility and style of SyncTeX indicator after a forward SyncTeX in the PDF viewer."
         },
         "latex-workshop.synctex.afterBuild.enabled": {
           "scope": "window",
           "type": "boolean",
           "default": false,
           "markdownDescription": "Execute forward synctex at cursor position after compiling LaTeX project."
-        },
-        "latex-workshop.synctex.synctexjs.enabled": {
-          "scope": "window",
-          "type": "boolean",
-          "default": true,
-          "markdownDescription": "Enable using a builtin synctex function. The command set in latex-workshop.synctex.path will not be used."
         },
         "latex-workshop.linting.chktex.enabled": {
           "scope": "resource",
@@ -1879,9 +1914,7 @@
           "items": {
             "type": "string"
           },
-          "default": [
-            "{"
-          ],
+          "default": [],
           "markdownDescription": "Additional trigger characters for intellisense of LaTeX documents."
         },
         "latex-workshop.intellisense.atSuggestion.trigger.latex": {
@@ -1992,7 +2025,7 @@
           "scope": "window",
           "type": "boolean",
           "default": true,
-          "markdownDescription": "If true, every environment provided by an included package is available by a snippet `\\envname`. Only applies when `#latex-workshop.intellisense.package.enabled#` is true. "
+          "markdownDescription": "If true, every environment provided by an included package is available by a snippet `\\envname`. Only applies when `#latex-workshop.intellisense.package.enabled#` is true. You can use only 2 placeholders: `%WORKSPACE_FOLDER%`, `%RELATIVE_DIR%`. Please visit https://github.com/James-Yu/LaTeX-Workshop/wiki/Compile#placeholders for their definitions."
         },
         "latex-workshop.intellisense.package.dirs": {
           "scope": "window",
@@ -2001,7 +2034,7 @@
             "type": "string"
           },
           "default": [],
-          "markdownDescription": "List of extra directories to look for package completion files in addition to those provided by the extension. See https://github.com/James-Yu/LaTeX-Workshop/wiki/Intellisense#commands-starting-with- to learn how to generate these files. Files found in these directories have a higher priority over the default ones. This setting is only relevant when `#latex-workshop.intellisense.package.env.enabled#` is true."
+          "markdownDescription": "List of extra directories to look for package completion files in addition to those provided by the extension. Files found in these directories have a higher priority over the default ones. LaTeX-Workshop bundles a limited number of package macro/env suggestions. Additional ones can be downloaded from https://download-directory.github.io/?url=https%3A%2F%2Fgithub.com%2FJames-Yu%2FLaTeX-Workshop%2Ftree%2Fmaster%2Fdev%2Fpackages . For custom packages, please visit https://github.com/James-Yu/LaTeX-Workshop/wiki/Intellisense#commands-starting-with- to learn how to generate these files. This setting is only relevant when `#latex-workshop.intellisense.package.env.enabled#` is true."
         },
         "latex-workshop.intellisense.includegraphics.preview.enabled": {
           "scope": "window",
@@ -2011,8 +2044,9 @@
         },
         "latex-workshop.message.badbox.show": {
           "scope": "window",
-          "type": "boolean",
-          "default": true,
+          "type": "string",
+          "enum": ["both", "overfull", "underfull", "none"],
+          "default": "both",
           "markdownDescription": "Show badbox information in the problems panel."
         },
         "latex-workshop.message.biberlog.exclude": {
@@ -2103,6 +2137,12 @@
           "type": "string",
           "default": "",
           "markdownDescription": "Define the image for `latexmk`, `synctex`, `texcount`, and `latexindent`."
+        },
+        "latex-workshop.docker.path": {
+          "scope": "window",
+          "type": "string",
+          "default": "docker",
+          "markdownDescription": "Docker (or Podman) executable name or path."
         },
         "latex-workshop.showContextMenu": {
           "scope": "window",
@@ -2490,19 +2530,19 @@
       "latex-workshop-activitybar": [
         {
           "id": "latex-workshop-commands",
-          "name": "Commands",
+          "name": "%activity.commands%",
           "when": "latex-workshop:enabled"
         },
         {
           "id": "latex-workshop-structure",
-          "name": "Structure",
+          "name": "%activity.structure%",
           "when": "latex-workshop:enabled"
         },
         {
           "id": "latex-workshop-snippet-view",
-          "type": "webview",
+          "name": "%activity.snippetview%",
           "when": "latex-workshop:enabled",
-          "name": "Snippet View"
+          "type": "webview"
         }
       ]
     },
@@ -2531,45 +2571,47 @@
     "release": "npm run clean && npm run lint && npm run compile && vsce package",
     "test": "node ./out/test/runTest.js",
     "watch-src": "tsc -watch -p tsconfig.json",
-    "watch-viewer": "tsc -watch -p viewer/tsconfig.json"
+    "watch-viewer": "tsc -watch -p viewer/tsconfig.json",
+    "update-grammar": "node ./dev/update-grammar.mjs"
   },
   "dependencies": {
     "cross-spawn": "7.0.3",
-    "glob": "10.3.10",
+    "glob": "10.3.15",
     "iconv-lite": "0.6.3",
     "latex-utensils": "6.2.0",
     "mathjax-full": "3.2.2",
-    "micromatch": "4.0.5",
-    "pdfjs-dist": "^4.0.379",
-    "tmp": "0.2.1",
-    "workerpool": "8.0.0",
-    "ws": "8.15.1"
+    "micromatch": "4.0.8",
+    "pdfjs-dist": "4.3.136",
+    "tmp": "0.2.3",
+    "workerpool": "9.1.1",
+    "ws": "8.17.1"
   },
   "devDependencies": {
     "@types/cross-spawn": "6.0.6",
     "@types/glob": "8.1.0",
-    "@types/micromatch": "4.0.6",
+    "@types/micromatch": "4.0.7",
     "@types/mocha": "10.0.6",
     "@types/node": "18.15.3",
+    "@types/sinon": "17.0.3",
     "@types/tmp": "0.2.6",
-    "@types/vscode": "1.74.0",
-    "@types/workerpool": "6.4.7",
+    "@types/vscode": "1.88.0",
     "@types/ws": "8.5.10",
-    "@typescript-eslint/eslint-plugin": "6.14.0",
-    "@typescript-eslint/parser": "6.14.0",
-    "@unified-latex/unified-latex-types": "1.4.2",
-    "@unified-latex/unified-latex-util-arguments": "1.4.2",
-    "@unified-latex/unified-latex-util-parse": "1.4.2",
-    "@unified-latex/unified-latex-util-to-string": "1.4.2",
-    "@vscode/test-electron": "2.3.8",
-    "@vscode/vsce": "2.22.0",
-    "c8": "^8.0.1",
-    "esbuild": "^0.19.9",
-    "eslint": "8.55.0",
-    "mocha": "10.2.0",
-    "rimraf": "5.0.5",
+    "@typescript-eslint/eslint-plugin": "7.9.0",
+    "@typescript-eslint/parser": "7.9.0",
+    "@unified-latex/unified-latex-types": "1.7.1",
+    "@unified-latex/unified-latex-util-arguments": "1.7.1",
+    "@unified-latex/unified-latex-util-parse": "1.7.1",
+    "@unified-latex/unified-latex-util-to-string": "1.7.1",
+    "@vscode/test-electron": "2.3.10",
+    "@vscode/vsce": "2.29.0",
+    "c8": "9.1.0",
+    "esbuild": "0.21.2",
+    "eslint": "8.56.0",
+    "mocha": "10.4.0",
+    "rimraf": "5.0.7",
+    "sinon": "18.0.0",
     "textmate-bailout": "1.1.0",
-    "typescript": "5.3.3",
-    "vscode-extend-language": "0.1.2"
+    "typescript": "5.4.5",
+    "vscode-extend-language": "0.2.2"
   }
 }

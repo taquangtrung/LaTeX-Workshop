@@ -1,0 +1,25 @@
+{
+  "includes": {
+    "xkeyval": [],
+    "amsmath": [],
+    "luacode": []
+  },
+  "macros": {
+    "luaTruthTable{}{}": {
+      "snippet": "luaTruthTable{${1:var1,${3:var2},${4:...}}{${2:expr1},${5:expr2},...}}"
+    },
+    "luaTruthTable[]{}{}": {
+      "snippet": "luaTruthTable[${3:options}]{${1:var1,${4:var2},${5:...}}{${2:expr1},${6:expr2},...}}",
+      "keyvalindex": 0,
+      "keyvalpos": 0
+    }
+  },
+  "envs": {},
+  "options": [],
+  "keyvals": [
+    [
+      "trtext=${1:text}",
+      "fltext=${1:text}"
+    ]
+  ]
+}

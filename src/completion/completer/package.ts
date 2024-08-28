@@ -5,6 +5,7 @@ import type * as Ast from '@unified-latex/unified-latex-types'
 import { lw } from '../../lw'
 import type { CompletionProvider, FileCache, Package } from '../../types'
 import { argContentToStr } from '../../utils/parser'
+import { replaceArgumentPlaceholders } from '../../utils/utils'
 
 const logger = lw.log('Intelli', 'Package')
 
@@ -60,7 +61,9 @@ function load(packageName: string) {
 
 function resolvePackageFile(packageName: string): string | undefined {
     const defaultDir = `${lw.extensionRoot}/data/packages/`
-    const dirs = vscode.workspace.getConfiguration('latex-workshop').get('intellisense.package.dirs') as string[]
+    const rawDirs = vscode.workspace.getConfiguration('latex-workshop').get('intellisense.package.dirs') as string[]
+    const dirs = rawDirs.map((dir) => {return replaceArgumentPlaceholders('', '')(dir)})
+
     dirs.push(defaultDir)
     for (const dir of dirs) {
         const filePath = path.resolve(dir, `${packageName}.json`)
@@ -232,8 +235,8 @@ function toPackageObj(packageName: string, options: string[], node?: Ast.Node): 
     }
     let pkgObj: {[pkgName: string]: string[]} = {}
     if (node?.type === 'macro' && node.content === 'documentclass') {
-        if (vscode.workspace.getConfiguration('latex-workshop').get('kpsewhich.enabled') as boolean) {
-            const clsPath = lw.file.kpsewhich([`${packageName}.cls`])
+        if (vscode.workspace.getConfiguration('latex-workshop').get('kpsewhich.class.enabled') as boolean) {
+            const clsPath = lw.file.kpsewhich(`${packageName}.cls`)
             if (clsPath && fs.existsSync(clsPath)) {
                 pkgObj = parseContent(fs.readFileSync(clsPath).toString())
             }

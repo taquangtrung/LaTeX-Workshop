@@ -75,7 +75,7 @@ function clear() {
  * @param {Step} step - The Step to check.
  * @returns {boolean} - True if the step is the last one; otherwise, false.
  */
-function isLastStep(step: Step) {
+function isLastStep(step: Step): boolean {
     return stepQueue.steps.length === 0 || stepQueue.steps[0].timestamp !== step.timestamp
 }
 
@@ -135,5 +135,8 @@ export const queue = {
     clear,
     isLastStep,
     getStep,
-    getStepString
+    getStepString,
+    _test: {
+        getQueue: () => stepQueue
+    }
 }

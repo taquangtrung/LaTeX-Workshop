@@ -1,0 +1,17 @@
+{
+  "includes": {
+    "iftex": [],
+    "setspace": [],
+    "pgfkeys": [],
+    "fontspec": [],
+    "babel": [],
+    "csquotes": []
+  },
+  "macros": {},
+  "envs": {},
+  "options": [
+    "अंतर",
+    "अंतर=${1:integer}"
+  ],
+  "keyvals": []
+}

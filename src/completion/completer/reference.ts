@@ -133,7 +133,12 @@ function parse(cache: FileCache) {
 function parseAst(node: Ast.Node, nodeStack: Ast.Node[], filePath: string, lines: string[], labelMacros: string[]): ReferenceItem[] {
     let refs: ReferenceItem[] = []
     if (node.type === 'macro' &&
-        ['renewcommand', 'newcommand', 'providecommand', 'DeclareMathOperator', 'renewenvironment', 'newenvironment'].includes(node.content)) {
+        ['renewcommand', 'newcommand', 'providecommand', 'DeclareMathOperator', 'renewenvironment', 'newenvironment',
+         'NewDocumentCommand', 'RenewDocumentCommand', 'ProvideDocumentCommand', 'DeclareDocumentCommand',
+         'NewDocumentEnvironment', 'RenewDocumentEnvironment', 'ProvideDocumentEnvironment', 'DeclareDocumentEnvironment',
+         'NewExpandableDocumentCommand', 'RenewExpandableDocumentCommand', 'ProvideExpandableDocumentCommand', 'DeclareExpandableDocumentCommand',
+         'newrobustcmd', 'renewrobustcmd', 'providerobustcmd'
+        ].includes(node.content)) {
         // Do not scan labels inside \newcommand, \newenvironment & co
         return []
     }
@@ -143,7 +148,7 @@ function parseAst(node: Ast.Node, nodeStack: Ast.Node[], filePath: string, lines
 
     let label = ''
     if (node.type === 'macro' && labelMacros.includes(node.content)) {
-        label = argContentToStr(node.args?.[1]?.content || [])
+        label = argContentToStr(node.args?.[2]?.content || [])
     } else if (node.type === 'environment') {
         label = argContentToStr(node.args?.[1]?.content || [])
         const index = label.indexOf('label=')

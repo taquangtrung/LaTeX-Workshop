@@ -1,5 +1,106 @@
 # Change Log
 
+## [10.1.0] - 2024-06-27
+
+### Added
+- (#4301) Multi-language support.
+
+### Fixed
+- (#4300) Prevent concurrent pdf refresh and queue a refresh if rate-limited.
+- (#4303) Support new command macros by `etoolbox`.
+
+## [10.0.0] - 2024-06-24 - Viewer Update
+
+### General
+- We revamped the UX experience when working with the built-in PDF viewer.
+  - (#4295) Flicker-free PDF refreshing contributed by @quoc-ho
+  - (#4292) New page trimming implementation.
+  - Upgrade PDF.js to v4.3.136
+
+### Changed
+- Now the trimming select UI element is moved to the dropdown menu of viewer.
+- Now the config item `latex-workshop.view.pdf.trim` has a new definition and usage.
+
+## [9.21.1] - 2024-06-24
+
+### Fixed
+- (#4294) Internal links in pdf viewer do not scroll to position.
+
+## [9.21.0] - 2024-06-23
+
+### Added
+- Upgrade pdf.js to v4.2.67.
+- Add all package suggestions to repo, let users download.
+- Allow more relative paths in `latex.texDirs` and `intellisense.package.dirs`.
+- (#4222) Customize docker (or podman) path.
+- (#4277) Add a close-env suggestion after `\begin{env}`.
+
+### Changed
+- (#4281) Try use `PDFViewerApplication.load` in viewer refresh.
+- (#4292) Better viewer trimming.
+
+### Fixed
+- Fix a duplicate children parsing bug in caching.
+- `\putbib` can also have `\subfix`.
+- Avoid included bib circular inclusion.
+- When finding root from workspace, we don't care if it is cached or not.
+
+## [9.20.1] - 2024-04-29
+
+### Fixed
+- Update grammars.
+- (#4215) Add `tkz-euclide` suggestions, update some others
+- (#4233) Cache outdir/auxdir per root file.
+- (#4239) Use synctex.js for backward sync (CJK-compatible)
+- (#4243) Fix WebSocket reconnect mechanism.
+- (#4247) Fix racing build-on-save when multiple files are edited.
+- (#4252) `intellisense.label.command` should not affect reference parsing.
+
+## [9.20.0] - 2024-04-15
+
+### Added
+- (#4194) Add a more accurate rectangle indicator for SyncTeX to PDF.
+  - Config `synctex.indicator.enabled` is changed to `synctex.indicator` and now is a string config.
+
+### Changed
+- Now calling SyncTeX will prioritize binary over synctex.js.
+  - Makes `synctex.synctexjs.enabled` obsolete.
+
+### Fixed
+- (#4215) Use `kpsewhich.class.enabled` and `kpsewhich.bibtex.enabled` to control `kpsewhich`.
+  - Replaces `kpsewhich.enabled`.
+- (#4227) Ignore label defs in `xparse` macros.
+
+## [9.19.2] - 2024-04-04
+
+### Fixed
+- Prevent `.aux` and `.out` file changes from triggering auto-build
+- (#4207) Cursor tracing in structure works across files with 2+ level differences.
+- ($4220) Synctex does not work while using vscode in browser.
+
+## [9.19.1] - 2024-03-12
+
+### Fixed
+- `auxdir` is automatically determined from last run recipe.
+  - `outdir` also, for testing purpose.
+- (#4193) Optional capture pattern for `\subfix` when including `bib` files.
+- (#4195) `bib` watcher follows `latex.watch.files.ignore`.
+- (#4197) Use BibTeX log parsing rules for its variants.
+
+## [9.19.0] - 2024-03-06
+
+### Added
+- (#4173) Add source to warning messages.
+- (#4181) Missing reference warnings now located precisely.
+
+### Fixed
+- Fix incorrect cursor position in math preview when cursor is at line > 0.
+- (#4166) Add deletion polling for non-binary files.
+- (#4167) PDF watcher never resets now.
+- (#4184) `kpsewhich` caches results.
+- (#4184) `kpsewhich.enabled` correctly controls calls to `kpsewhich`.
+- (#4188) Cleaning with `latexmk` honors `outdir`.
+
 ## [9.18.2] - 2024-02-18
 
 ### Fixed

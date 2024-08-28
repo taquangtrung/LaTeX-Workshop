@@ -169,6 +169,7 @@ pgf.cwl
 pgfcore.cwl
 pgfplots.cwl
 physics.cwl
+physics2.cwl
 pifont.cwl
 placeins.cwl
 psfrag.cwl
@@ -214,6 +215,7 @@ tikz-cd.cwl
 tikz-timing.cwl
 tikz.cwl
 titlesec.cwl
+tkz-euclide.cwl
 tocbibind.cwl
 tocloft.cwl
 todonotes.cwl

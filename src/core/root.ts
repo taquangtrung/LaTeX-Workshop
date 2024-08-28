@@ -20,7 +20,15 @@ export const root = {
         langId: undefined as string | undefined,
     },
     find,
-    getWorkspace
+    getWorkspace,
+    _test: {
+        getIndicator,
+        getWorkspace,
+        findFromMagic,
+        findFromActive,
+        findFromRoot,
+        findInWorkspace
+    }
 }
 
 lw.watcher.src.onDelete(filePath => {
@@ -150,46 +158,41 @@ function getWorkspace(filePath?: string): vscode.Uri | undefined {
  *
  * @returns {string | undefined} The root file path, or undefined if not found.
  */
-function findFromMagic(): string | undefined {
+async function findFromMagic(): Promise<string | undefined> {
     if (!vscode.window.activeTextEditor) {
         return
     }
-    const regex = /^(?:%\s*!\s*T[Ee]X\sroot\s*=\s*(.*\.(?:tex|[jrsRS]nw|[rR]tex|jtexw))$)/m
-    let content: string | undefined = vscode.window.activeTextEditor.document.getText()
 
-    let result = content.match(regex)
+    const regex = /^(?:%\s*!\s*T[Ee]X\sroot\s*=\s*(.*\.(?:tex|[jrsRS]nw|[rR]tex|jtexw))$)/m
     const fileStack: string[] = []
-    if (result) {
-        let filePath = path.resolve(path.dirname(vscode.window.activeTextEditor.document.fileName), result[1])
-        content = lw.file.read(filePath)
+    let content: string | undefined = vscode.window.activeTextEditor.document.getText()
+    let filePath = vscode.window.activeTextEditor.document.fileName
+    let result = content.match(regex)
+
+    while (result) {
+        filePath = path.resolve(path.dirname(filePath), result[1])
+
+        if (fileStack.includes(filePath)) {
+            logger.log(`Found looped magic root ${filePath} .`)
+            return filePath
+        }
+        fileStack.push(filePath)
+        logger.log(`Found magic root ${filePath}`)
+
+        content = await lw.file.read(filePath)
         if (content === undefined) {
             logger.log(`Non-existent magic root ${filePath} .`)
             return
         }
-        fileStack.push(filePath)
-        logger.log(`Found magic root ${filePath} from active.`)
 
         result = content.match(regex)
-        while (result) {
-            filePath = path.resolve(path.dirname(filePath), result[1])
-            if (fileStack.includes(filePath)) {
-                logger.log(`Found looped magic root ${filePath} .`)
-                return filePath
-            } else {
-                fileStack.push(filePath)
-                logger.log(`Found magic root ${filePath}`)
-            }
-
-            content = lw.file.read(filePath)
-            if (content === undefined) {
-                logger.log(`Non-existent magic root ${filePath} .`)
-                return
-            }
-            result = content.match(regex)
-        }
-        logger.log(`Finalized magic root ${filePath} .`)
-        return filePath
     }
+    if (fileStack.length > 0) {
+        const finalFilePath = fileStack[fileStack.length - 1]
+        logger.log(`Finalized magic root ${finalFilePath} .`)
+        return finalFilePath
+    }
+
     return
 }
 
@@ -260,19 +263,16 @@ function findFromActive(): string | undefined {
  * if not found.
  */
 function findSubfiles(content: string): string | undefined {
-    if (!vscode.window.activeTextEditor) {
-        return
-    }
     const regex = /(?:\\documentclass\[(.*)\]{subfiles})/s
     const result = content.match(regex)
-    if (result) {
-        const filePath = utils.resolveFile([path.dirname(vscode.window.activeTextEditor.document.fileName)], result[1])
-        if (filePath) {
-            logger.log(`Found subfile root ${filePath} from active.`)
-        }
-        return filePath
+    if (!result) {
+        return
     }
-    return
+    const filePath = utils.resolveFile([path.dirname(vscode.window.activeTextEditor!.document.fileName)], result[1])
+    if (filePath) {
+        logger.log(`Found subfile root ${filePath} from active.`)
+    }
+    return filePath
 }
 
 /**
@@ -307,7 +307,7 @@ async function findInWorkspace(): Promise<string | undefined> {
                 logger.log(`Skip the file: ${fileUri.toString(true)}`)
                 continue
             }
-            const flsChildren = lw.cache.getFlsChildren(fileUri.fsPath)
+            const flsChildren = await lw.cache.getFlsChildren(fileUri.fsPath)
             if (vscode.window.activeTextEditor && flsChildren.includes(vscode.window.activeTextEditor.document.fileName)) {
                 logger.log(`Found root file from '.fls': ${fileUri.fsPath}`)
                 return fileUri.fsPath
@@ -316,10 +316,10 @@ async function findInWorkspace(): Promise<string | undefined> {
             const result = content.match(getIndicator())
             if (result) {
                 // Can be a root
-                const children = lw.cache.getIncludedTeX(fileUri.fsPath).filter(filePath => filePath !== fileUri.fsPath)
+                const children = lw.cache.getIncludedTeX(fileUri.fsPath, false).filter(filePath => filePath !== fileUri.fsPath)
                 if (vscode.window.activeTextEditor && children.includes(vscode.window.activeTextEditor.document.fileName)) {
-                    logger.log(`Found root file from parent: ${fileUri.fsPath}`)
-                    return fileUri.fsPath
+                    logger.log(`Found root file from active editor by parent: ${fileUri.fsPath}`)
+                    candidates.unshift(fileUri.fsPath)
                 }
                 // Not including the active file, yet can still be a root candidate
                 candidates.push(fileUri.fsPath)

@@ -57,8 +57,12 @@ def create_snippet(line: str) -> str:
             snippet = re.sub(r'(\[)([^\[\$]*)(\])', p.sub, snippet)
         else:
             snippet = re.sub(r'(\{|\[)([^\{\[\$]*)(\}|\])', p.sub, snippet)
+
     snippet = re.sub(r'(?<![\{\s:\[])(\<)([a-zA-Z\s]*)(\>)', p.sub, snippet)
-    snippet = re.sub(r'(\()([^\{\}\[\]\(\)]*)(\))', p.sub, snippet)
+
+    # (x0,y0,z0)(x1,y1)
+    # snippet = re.sub(r'(\()([^\{\}\[\]\(\)]*)(\))', p.sub, snippet)
+    snippet = re.sub(r'(?<=\(|,)()([^,()]+)()(?=,|\))', p.sub, snippet)
     p.setKeepDelimiters(False)
     snippet = re.sub(r'(?<![\{:\[=-])(%\<)([a-zA-Z\s]*)(%\>)(?!})', p.sub, snippet)
 
@@ -69,6 +73,7 @@ def create_snippet(line: str) -> str:
     snippet = re.sub(r'%<([^%]*?)%:.*?%>', r'\1', snippet)
     snippet = re.sub(r'%<([^%]*?)%>', r'\1', snippet)
     snippet = re.sub(r'\$\{(\d+:.*?)%.*?\}', r'${\1}', snippet)
+    
     return snippet
 
 
@@ -247,7 +252,9 @@ class CwlIntel:
                     name = name.strip()
                 # The name field can only contain letters, `{`, `}`, `[`, `]` and `*`.
                 # https://github.com/James-Yu/LaTeX-Workshop/issues/3264#issuecomment-1138733921
-                if re.search(r'[^A-Za-z0-9\[\]\{\}\<\>\*_^:\s]', name) is not None or '%' in name:
+                # Also include `(`, `)`, and `,`
+                # https://github.com/James-Yu/LaTeX-Workshop/issues/4313#issuecomment-2214209089
+                if re.search(r'[^A-Za-z0-9\[\]\{\}\<\>\*_^:\(\),\s]', name) is not None or '%' in name:
                     continue
                 snippet = create_snippet(match[2] if len(match.groups()) >= 2 and match[2] else '')
                 pkg.envs[name] = Env(
@@ -278,7 +285,9 @@ class CwlIntel:
                     name = name.strip()
                 # The name field can only contain letters, `{`, `}`, `[`, `]` and `*`.
                 # https://github.com/James-Yu/LaTeX-Workshop/issues/3264#issuecomment-1138733921
-                if re.search(r'[^A-Za-z\[\]\{\}\<\>\*_^:\s]', name) is not None:
+                # Also include `(`, `)`, and `,`
+                # https://github.com/James-Yu/LaTeX-Workshop/issues/4313#issuecomment-2214209089
+                if re.search(r'[^A-Za-z\[\]\{\}\<\>\*_^:\(\),\s]', name) is not None:
                     continue
                 if name in self.commands:
                     continue
@@ -324,6 +333,13 @@ class CwlIntel:
                                 pkg.envs[pkgenv].keyvalpos = len(re.findall(r'\[\]|\(\)|<>|{}', re.sub(r'\${.*?}', '', pkg.envs[pkgenv].snippet[:haskeyvals.start()])))
                             pkg.envs[pkgenv].keyvalindex = pkg.envs[pkgenv].keyvalindex or []
                             pkg.envs[pkgenv].keyvalindex.append(match[1])
+                    elif envcmd.startswith('\\usepackage/'):
+                        for i in range(len(re.findall(r'%<([^%]*?)%>', line))):
+                            line = re.sub(r'%<([^%]*?)%>', '${' + str(i + 1) + r':\1}', line, 1)
+                        match = re.match(r'^([^#%\n]*)', line)
+                        if match is None:
+                            continue
+                        pkg.options.append(match[1])
                     else:
                         cmd = re.match(r'\\?([^{\[#]*)', envcmd)[1]
                         for pkgcmd in pkg.macros:
