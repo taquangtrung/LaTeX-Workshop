@@ -661,28 +661,6 @@ class LateXWorkshopPdfViewer implements ILatexWorkshopPdfViewer {
                 }
             }
 
-            // Disable and resend some keybindings back to VSCode
-            if (evt.key === 'ArrowRight' || evt.key === 'ArrowLeft') {
-                evt.preventDefault()
-                evt.stopImmediatePropagation()
-                const obj = {
-                    altKey: evt.altKey,
-                    code: evt.code,
-                    keyCode: evt.keyCode,
-                    ctrlKey: evt.ctrlKey,
-                    isComposing: evt.isComposing,
-                    key: evt.key,
-                    location: evt.location,
-                    metaKey: evt.metaKey,
-                    repeat: evt.repeat,
-                    shiftKey: evt.shiftKey
-                }
-                this.sendToPanelManager({
-                    type: 'keyboard_event',
-                    event: obj
-                })
-            }
-
             // Configure search by `ctrl+s` (Emacs-like) or `/` (Vim-like)
             if (!evt.shiftKey && !evt.altKey && !evt.metaKey &&
                     ((evt.ctrlKey && evt.key === 's' || !evt.ctrlKey && evt.key === '/'))){
