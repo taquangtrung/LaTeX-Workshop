@@ -563,32 +563,32 @@ function indexes(source: string, find: string) {
     return result
 }
 
-// /**
-//  * Animate to notify the user about a specific position.
-//  *
-//  * This function animates to notify the user about a specific position by
-//  * highlighting the line. It creates a temporary decoration with a border around
-//  * the line and disposes it after 500 milliseconds.
-//  *
-//  * @param editor - The TextEditor in which to animate.
-//  * @param position - The Position to animate.
-//  */
-// function animateToNotify(editor: vscode.TextEditor, position: vscode.Position) {
-//     const decoConfig = {
-//         borderWidth: '1px',
-//         borderStyle: 'solid',
-//         light: {
-//             borderColor: 'red'
-//         },
-//         dark: {
-//             borderColor: 'white'
-//         }
-//     }
-//     const range = new vscode.Range(position.line, 0, position.line, 65535)
-//     const deco = vscode.window.createTextEditorDecorationType(decoConfig)
-//     editor.setDecorations(deco, [range])
-//     setTimeout(() => { deco.dispose() }, 500)
-// }
+/**
+ * Animate to notify the user about a specific position.
+ *
+ * This function animates to notify the user about a specific position by
+ * highlighting the line. It creates a temporary decoration with a border around
+ * the line and disposes it after 500 milliseconds.
+ *
+ * @param editor - The TextEditor in which to animate.
+ * @param position - The Position to animate.
+ */
+function animateToNotify(editor: vscode.TextEditor, position: vscode.Position) {
+    const decoConfig = {
+        borderWidth: '1px',
+        borderStyle: 'solid',
+        light: {
+            borderColor: 'red'
+        },
+        dark: {
+            borderColor: 'white'
+        }
+    }
+    const range = new vscode.Range(position.line, 0, position.line, 65535)
+    const deco = vscode.window.createTextEditorDecorationType(decoConfig)
+    editor.setDecorations(deco, [range])
+    setTimeout(() => { deco.dispose() }, 500)
+}
 
 /**
  * Execute external SyncTeX with a specified PDF viewer.
