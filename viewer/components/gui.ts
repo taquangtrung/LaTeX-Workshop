@@ -102,11 +102,15 @@ export function registerKeyBind() {
         }
 
         // Configure VIM-like shortcut keys
-        if (!evt.altKey && !evt.ctrlKey && !evt.metaKey && ['J', 'K', 'H', 'L'].includes(evt.key)) {
+        if (!evt.altKey && !evt.ctrlKey && !evt.metaKey && ['j', 'k', 'h', 'l', 'J', 'K', 'H', 'L'].includes(evt.key)) {
             evt.stopImmediatePropagation()
             const container = document.getElementById('viewerContainer')!
 
             const configMap: {[key: string]: ScrollToOptions} = {
+                'j': { top: container.clientHeight },
+                'k': { top: -container.clientHeight},
+                'h': { left: evt.repeat ? -20 : -40 },
+                'l': { left: evt.repeat ? 20 : 40 },
                 'J': { top: evt.repeat ? 20 : 40 },
                 'K': { top: evt.repeat ? -20 : -40 },
                 'H': { left: evt.repeat ? -20 : -40 },
