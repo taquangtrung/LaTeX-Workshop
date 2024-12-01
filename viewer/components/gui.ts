@@ -107,18 +107,20 @@ export function registerKeyBind() {
             const container = document.getElementById('viewerContainer')!
 
             const configMap: {[key: string]: ScrollToOptions} = {
-                'j': { top: container.clientHeight },
-                'k': { top: -container.clientHeight},
-                'h': { left: evt.repeat ? -20 : -40 },
-                'l': { left: evt.repeat ? 20 : 40 },
-                'J': { top: evt.repeat ? 20 : 40 },
-                'K': { top: evt.repeat ? -20 : -40 },
-                'H': { left: evt.repeat ? -20 : -40 },
-                'L': { left: evt.repeat ? 20 : 40 },
+                'j': { top: evt.repeat ? container.clientHeight / 10 : container.clientHeight / 5 },
+                'k': { top: evt.repeat ? -container.clientHeight / 10 : -container.clientHeight / 5 },
+                'h': { left: -container.clientWidth / 10 },
+                'l': { left: container.clientWidth / 10 },
+                'J': { top: container.clientHeight },
+                'K': { top: -container.clientHeight},
+                'H': { left: -container.clientWidth / 5 },
+                'L': { left: container.clientWidth / 5 },
             }
 
+            const behavior = evt.repeat ? 'instant' : 'smooth'
+
             if (configMap[evt.key]) {
-                container.scrollBy({ ...configMap[evt.key], behavior: 'smooth' })
+                container.scrollBy({ ...configMap[evt.key], behavior })
             }
         }
     })
